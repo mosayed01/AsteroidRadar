@@ -1,7 +1,7 @@
 package com.udacity.asteroidradar
 
 import android.app.Application
-import com.udacity.asteroidradar.data.local.database.AsteroidDB
+import com.udacity.asteroidradar.data.local.AsteroidDB
 import kotlinx.coroutines.InternalCoroutinesApi
 import timber.log.Timber
 

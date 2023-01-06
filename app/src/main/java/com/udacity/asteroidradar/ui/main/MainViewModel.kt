@@ -1,9 +1,13 @@
 package com.udacity.asteroidradar.ui.main
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.udacity.asteroidradar.data.local.AsteroidDB.Companion.getDatabase
+import com.udacity.asteroidradar.data.remote.getNextSevenDaysFormattedDates
+import com.udacity.asteroidradar.data.remote.getToday
 import com.udacity.asteroidradar.domain.models.Asteroid
 import com.udacity.asteroidradar.domain.models.PictureOfDay
 import com.udacity.asteroidradar.domain.repository.AsteroidRepository
@@ -11,52 +15,62 @@ import com.udacity.asteroidradar.util.FilterEvent
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class MainViewModel : ViewModel() {
+class MainViewModel(context: Context) : ViewModel() {
+    private val database = getDatabase(context)
+    private val repository = AsteroidRepository(database)
+    private val dao = database.AsteroidDao()
 
     private val _listOfAsteroid = MutableLiveData<ArrayList<Asteroid>>(ArrayList())
     val listOfAsteroid: LiveData<ArrayList<Asteroid>>
         get() = _listOfAsteroid
 
-    private val _picDay = MutableLiveData<PictureOfDay>()
-    val picDay: LiveData<PictureOfDay>
-        get() = _picDay
-
-    private val repository = AsteroidRepository()
+    val picDay: LiveData<PictureOfDay> = repository.pictureOfDay
 
     init {
+        showAll()
         setList()
-        setPic()
+        refreshPicture()
+    }
+
+    private fun showAll() {
+        viewModelScope.launch {
+            dao.getAll()
+                .collect { _listOfAsteroid.value = ArrayList(it.take(7)) }
+        }
     }
 
     fun setList(filterEvent: FilterEvent = FilterEvent.SavedEvent) {
         viewModelScope.launch {
-            repository.setAsteroidsFromApiToLocal()
+            repository.refreshAsteroid()
 
             when (filterEvent) {
                 is FilterEvent.SavedEvent -> {
-                    _listOfAsteroid.postValue(repository.getDataFromDB())
+                    dao.getSavedBeforeTodayAsteroid(getToday())
+                        .collect { _listOfAsteroid.value = ArrayList(it) }
                 }
 
                 is FilterEvent.TodayEvent -> {
-                    _listOfAsteroid.postValue(repository.getDataFromDBToday())
+                    dao.getTodayAsteroid(getToday())
+                        .collect { _listOfAsteroid.value = ArrayList(it) }
                 }
 
                 is FilterEvent.WeekEvent -> {
-                    _listOfAsteroid.postValue(repository.getDataFromDBWeek())
+                    val week = getNextSevenDaysFormattedDates()
+                    dao.getAsteroidsNext(week.first())
+                        .collect { _listOfAsteroid.value = ArrayList(it) }
                 }
             }
 
         }
     }
 
-    private fun setPic() {
+    private fun refreshPicture() {
         viewModelScope.launch {
             try {
-                _picDay.postValue(repository.getPicture())
+                repository.refreshPicture()
             } catch (e: Exception) {
                 Timber.e("setPic: ${e.message ?: e.toString()}")
             }
-
         }
     }
 }
