@@ -3,6 +3,7 @@ package com.udacity.asteroidradar.main
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,7 +21,8 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentMainBinding.inflate(inflater)
+        val binding: FragmentMainBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -47,11 +49,13 @@ class MainFragment : Fragment() {
                 Toast.makeText(context, "All", Toast.LENGTH_SHORT).show()
                 return true
             }
+
             R.id.show_buy_menu -> {
                 viewModel.setList(FilterEvent.WeekEvent)
                 Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
                 return true
             }
+
             R.id.show_rent_menu -> {
                 viewModel.setList(FilterEvent.TodayEvent)
                 Toast.makeText(context, "Today", Toast.LENGTH_SHORT).show()

@@ -9,23 +9,25 @@ import com.udacity.asteroidradar.adapters.RecycleAdapter
 import java.lang.reflect.Array.get
 
 @BindingAdapter("statusIcon")
-fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
-    if (isHazardous) {
-        imageView.setImageResource(R.drawable.ic_status_potentially_hazardous)
-        imageView.contentDescription = "potentially hazardous" // Instead use getString
+fun ImageView.bindAsteroidStatusImage(isHazardous: Boolean) {
+    contentDescription = if (isHazardous) {
+        setImageResource(R.drawable.ic_status_potentially_hazardous)
+        "potentially hazardous"
     } else {
-        imageView.setImageResource(R.drawable.ic_status_normal)
-        imageView.contentDescription = "not hazardous" // Instead use getString
+        setImageResource(R.drawable.ic_status_normal)
+        "not hazardous"
 
     }
 }
 
 @BindingAdapter("asteroidStatusImage")
-fun bindDetailsStatusImage(imageView: ImageView, isHazardous: Boolean) {
-    if (isHazardous) {
-        imageView.setImageResource(R.drawable.asteroid_hazardous)
+fun ImageView.bindDetailsStatusImage(isHazardous: Boolean) {
+    contentDescription = if (isHazardous) {
+        setImageResource(R.drawable.asteroid_hazardous)
+        context.getString(R.string.potentially_hazardous_asteroid_image)
     } else {
-        imageView.setImageResource(R.drawable.asteroid_safe)
+        setImageResource(R.drawable.asteroid_safe)
+        context.getString(R.string.not_hazardous_asteroid_image)
     }
 }
 
@@ -54,23 +56,23 @@ fun bindList(rv: RecyclerView, listData: ArrayList<Asteroid>) {
 }
 
 @BindingAdapter("ms:pictureOfTheDay")
-fun bindPicture(imageView: ImageView, url: String?){
-   Picasso.with(imageView.context)
-       .load(url)
-       .into(imageView)
-    if (url==null){
+fun bindPicture(imageView: ImageView, url: String?) {
+    Picasso.with(imageView.context)
+        .load(url)
+        .into(imageView)
+    if (url == null) {
         imageView.setImageResource(R.drawable.placeholder_picture_of_day)
     }
 }
 
 @BindingAdapter("ms:bindContentDescription")
-fun setPicOfTheDayContentDescription(imageView: ImageView, pictureOfDay: PictureOfDay?){
+fun setPicOfTheDayContentDescription(imageView: ImageView, pictureOfDay: PictureOfDay?) {
     if (pictureOfDay != null) {
         imageView.contentDescription = pictureOfDay.title
     }
 }
 
 @BindingAdapter("helpContentDescription")
-fun setContent(imageView: ImageView, string: String?){
+fun setContent(imageView: ImageView, string: String?) {
     imageView.contentDescription = string
 }

@@ -1,12 +1,10 @@
 package com.udacity.asteroidradar.repository
 
-import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.PictureOfDay
-import com.udacity.asteroidradar.TAG
 import com.udacity.asteroidradar.api.AsteroidAPI
 import com.udacity.asteroidradar.api.getNextSevenDaysFormattedDates
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
@@ -18,6 +16,7 @@ import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import timber.log.Timber
 import java.io.IOException
 
 class AsteroidRepository {
@@ -70,11 +69,11 @@ class AsteroidRepository {
                 db.insertAll(dataAsParsed)
             }
         } catch (io: IOException) {
-            Log.e(TAG, "setAsteroidsFromApiToLocal(io): ${io.localizedMessage ?: io.toString()}")
+            Timber.e("setAsteroidsFromApiToLocal(io): ${io.localizedMessage ?: io.toString()}")
         } catch (http: HttpException) {
-            Log.e(TAG, "setAsteroidsFromApiToLocal(http): ${http.message ?: http.toString()}")
+            Timber.e("setAsteroidsFromApiToLocal(http): ${http.message ?: http.toString()}")
         } catch (e: Exception) {
-            Log.e(TAG, "setAsteroidsFromApiToLocal(e): ${e.message ?: e.toString()}")
+            Timber.e("setAsteroidsFromApiToLocal(e): ${e.message ?: e.toString()}")
         }
     }
 

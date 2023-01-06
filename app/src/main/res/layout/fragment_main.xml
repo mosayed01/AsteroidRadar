@@ -31,7 +31,8 @@
                 ms:bindContentDescription="@{viewModel.picDay}"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/placeholder_picture_of_day" />
+                app:srcCompat="@drawable/placeholder_picture_of_day"
+                ms:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/textView"
@@ -48,7 +49,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/asteroid_recycler"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
