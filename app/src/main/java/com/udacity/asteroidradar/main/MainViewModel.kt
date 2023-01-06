@@ -11,6 +11,7 @@ import com.udacity.asteroidradar.TAG
 import com.udacity.asteroidradar.repository.AsteroidRepository
 import com.udacity.asteroidradar.util.FilterEvent
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class MainViewModel : ViewModel() {
 
@@ -37,9 +38,11 @@ class MainViewModel : ViewModel() {
                 is FilterEvent.SavedEvent -> {
                     _listOfAsteroid.postValue(repository.getDataFromDB())
                 }
+
                 is FilterEvent.TodayEvent -> {
                     _listOfAsteroid.postValue(repository.getDataFromDBToday())
                 }
+
                 is FilterEvent.WeekEvent -> {
                     _listOfAsteroid.postValue(repository.getDataFromDBWeek())
                 }
@@ -53,76 +56,9 @@ class MainViewModel : ViewModel() {
             try {
                 _picDay.postValue(repository.getPicture())
             } catch (e: Exception) {
-                Log.e(TAG, "setPic: ${e.message ?: e.toString()}")
+                Timber.e("setPic: ${e.message ?: e.toString()}")
             }
 
         }
     }
-
-//    private fun setList() {
-//        viewModelScope.launch {
-//
-//            val startAndEnd = getNextSevenDaysFormattedDates()
-//            try {
-//                val result = repository.getAsteroidListFromApi(startAndEnd[0], startAndEnd[7])
-//                val listData = parseAsteroidsJsonResult(JSONObject(result))
-//
-//                repository.addToDB(listData)
-//
-//
-//                _listOfAsteroid.postValue(repository.getDataFromDB())
-//            } catch (exception: Exception) {
-//
-//            }
-//        }
-//    }
-
-//    fun getAsteroid(filterEvent: FilterEvent = FilterEvent.SavedEvent) {
-//        viewModelScope.launch {
-//            var bySaved: List<Asteroid> = emptyList()
-//            var byToday: List<Asteroid>
-//            var byWeek: List<Asteroid>
-//
-//            val asteroidAsync = CoroutineScope(Dispatchers.IO).async(start = CoroutineStart.LAZY) {
-//                repository.setAsteroidsFromApiToLocal()
-//                bySaved = mDao.getAll()
-//            }
-//
-//            asteroidAsync.await()
-//
-//            try {
-//                when (filterEvent) {
-//                    is FilterEvent.SavedEvent -> {
-//                        _listOfAsteroid.postValue(repository.getDataFromDB())
-//                    }
-//
-//                    is FilterEvent.TodayEvent -> {
-//                        withContext(Dispatchers.IO) {
-//                            byToday =
-//                                mDao.getAsteroidsBySpecificDateEvent(startAndEnd[0], startAndEnd[0])
-//                        }
-//                        _listOfAsteroid.postValue(ArrayList(byToday))
-//                    }
-//
-//                    is FilterEvent.WeekEvent -> {
-//                        withContext(Dispatchers.IO) {
-//                            byWeek =
-//                                mDao.getAsteroidsBySpecificDateEvent(startAndEnd[0], startAndEnd[7])
-//                        }
-//                        _listOfAsteroid.postValue(ArrayList(byWeek))
-//                    }
-//                }
-//            } catch (e: IOException) {
-//                Log.e(TAG, "invoke: ${e.localizedMessage ?: e.toString()}")
-////                _listOfAsteroid.postValue(repository.getDataFromDB())
-//            } catch (e: HttpException) {
-//                Log.e(TAG, "invoke: ${e.localizedMessage ?: e.toString()}")
-////                _listOfAsteroid.postValue(repository.getDataFromDB())
-//            } catch (e: Exception) {
-//                Log.e(TAG, "invoke: ${e.localizedMessage ?: e.toString()}")
-////                _listOfAsteroid.postValue(repository.getDataFromDB())
-//            }
-//
-//        }
-//    }
 }
