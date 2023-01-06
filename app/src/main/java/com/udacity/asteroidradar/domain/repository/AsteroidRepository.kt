@@ -1,14 +1,14 @@
-package com.udacity.asteroidradar.repository
+package com.udacity.asteroidradar.domain.repository
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.Constants
-import com.udacity.asteroidradar.PictureOfDay
-import com.udacity.asteroidradar.api.AsteroidAPI
-import com.udacity.asteroidradar.api.getNextSevenDaysFormattedDates
-import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
-import com.udacity.asteroidradar.database.AsteroidDB
+import com.udacity.asteroidradar.domain.models.Asteroid
+import com.udacity.asteroidradar.util.Constants
+import com.udacity.asteroidradar.domain.models.PictureOfDay
+import com.udacity.asteroidradar.data.remote.api.AsteroidAPI
+import com.udacity.asteroidradar.data.remote.api.getNextSevenDaysFormattedDates
+import com.udacity.asteroidradar.data.remote.api.parseAsteroidsJsonResult
+import com.udacity.asteroidradar.data.local.database.AsteroidDB
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject

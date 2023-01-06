@@ -1,14 +1,16 @@
-package com.udacity.asteroidradar.adapters
+package com.udacity.asteroidradar.util.recycle
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.udacity.asteroidradar.Asteroid
+import com.udacity.asteroidradar.domain.models.Asteroid
 import com.udacity.asteroidradar.databinding.AsteroidItemBinding
 
-class RecycleAdapter(private val clickListener: ClickListener) : ListAdapter<Asteroid, RecycleAdapter.Holder>(DiffCallback) {
+class RecycleAdapter(private val clickListener: ClickListener) : ListAdapter<Asteroid, RecycleAdapter.Holder>(
+    DiffCallback
+) {
     class Holder(private var binding: AsteroidItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
         fun bind(clickListener: ClickListener, asteroid: Asteroid){

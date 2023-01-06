@@ -1,10 +1,10 @@
-package com.udacity.asteroidradar.database
+package com.udacity.asteroidradar.data.local.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.udacity.asteroidradar.Asteroid
+import com.udacity.asteroidradar.domain.models.Asteroid
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.internal.synchronized
 

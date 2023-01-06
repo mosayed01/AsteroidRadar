@@ -1,14 +1,12 @@
-package com.udacity.asteroidradar.main
+package com.udacity.asteroidradar.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.PictureOfDay
-import com.udacity.asteroidradar.TAG
-import com.udacity.asteroidradar.repository.AsteroidRepository
+import com.udacity.asteroidradar.domain.models.Asteroid
+import com.udacity.asteroidradar.domain.models.PictureOfDay
+import com.udacity.asteroidradar.domain.repository.AsteroidRepository
 import com.udacity.asteroidradar.util.FilterEvent
 import kotlinx.coroutines.launch
 import timber.log.Timber

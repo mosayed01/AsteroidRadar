@@ -1,9 +1,7 @@
-package com.udacity.asteroidradar.api
+package com.udacity.asteroidradar.data.remote.api
 
-import com.udacity.asteroidradar.Constants
-import com.udacity.asteroidradar.PictureOfDay
-import org.json.JSONObject
-import retrofit2.Response
+import com.udacity.asteroidradar.domain.models.PictureOfDay
+import com.udacity.asteroidradar.util.Constants
 import retrofit2.http.GET
 import retrofit2.http.Query
 

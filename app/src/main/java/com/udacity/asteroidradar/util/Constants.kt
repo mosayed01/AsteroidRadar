@@ -1,6 +1,6 @@
-package com.udacity.asteroidradar
+package com.udacity.asteroidradar.util
 
-const val TAG = "MoSayed"
+import com.udacity.asteroidradar.BuildConfig
 
 object Constants {
     const val API_QUERY_DATE_FORMAT = "YYYY-MM-dd"

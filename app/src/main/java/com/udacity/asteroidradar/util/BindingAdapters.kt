@@ -5,8 +5,9 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import com.udacity.asteroidradar.adapters.RecycleAdapter
-import java.lang.reflect.Array.get
+import com.udacity.asteroidradar.util.recycle.RecycleAdapter
+import com.udacity.asteroidradar.domain.models.Asteroid
+import com.udacity.asteroidradar.domain.models.PictureOfDay
 
 @BindingAdapter("statusIcon")
 fun ImageView.bindAsteroidStatusImage(isHazardous: Boolean) {

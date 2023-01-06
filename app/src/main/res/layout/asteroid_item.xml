@@ -7,11 +7,11 @@
 
         <variable
             name="asteroid"
-            type="com.udacity.asteroidradar.Asteroid" />
+            type="com.udacity.asteroidradar.domain.models.Asteroid" />
 
         <variable
             name="clickListener"
-            type="com.udacity.asteroidradar.adapters.ClickListener" />
+            type="com.udacity.asteroidradar.util.recycle.ClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
